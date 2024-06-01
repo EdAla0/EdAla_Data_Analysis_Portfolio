@@ -1,0 +1,19 @@
+SELECT
+  cpt.irn AS irn,
+  cpt.year AS year,
+  cpt.acad_level AS acad_level,
+  cpt.step AS step,
+  cpt.idx_value AS cpt_idx,
+  upd.idx_value AS upd_idx,
+  cpt.idx_value * base.base_salary AS salary,
+  upd.idx_value - cpt.idx_value AS difference_value
+FROM
+  labor_db.indexes_cpt AS cpt
+JOIN
+  labor_db.indexes_upd AS upd ON cpt.irn = upd.irn AND cpt.year = upd.year AND cpt.acad_level = upd.acad_level AND cpt.step = upd.step
+JOIN
+  labor_db.base_salary_cpt AS base ON cpt.irn = base.irn AND cpt.year = base.contract_year
+WHERE
+  cpt.irn = '44586' AND cpt.year = '2024' AND cpt.acad_level = 'MA'
+ORDER BY
+  cpt.step;
